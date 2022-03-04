@@ -58,7 +58,7 @@ fn main() -> rltk::BError {
 
     let map: Map = Map::new_map_rooms_and_corridors();
     let (player_x, player_y) = map.rooms[0].center();
-
+    let mut rng = rltk::RandomNumberGenerator::new();
     for room in map.rooms.iter().skip(1) {
         let (x, y) = room.center();
 
