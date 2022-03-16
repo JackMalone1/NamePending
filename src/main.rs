@@ -12,6 +12,10 @@ mod visibility_system;
 use visibility_system::VisibilitySystem;
 mod map_indexing_system;
 mod monster_ai_system;
+mod melee_combat_system;
+use melee_combat_system::MeleeCombatSystem;
+mod damage_system;
+use damage_system::DamageSystem;
 use map_indexing_system::MapIndexingSystem;
 
 use monster_ai_system::MonsterAI;
@@ -35,6 +39,10 @@ impl State {
         mob.run_now(&self.ecs);
         let mut mapindex = MapIndexingSystem {};
         mapindex.run_now(&self.ecs);
+        let mut melee = MeleeCombatSystem{};
+        melee.run_now(&self.ecs);
+        let mut damage = DamageSystem{};
+        damage.run_now(&self.ecs);
         self.ecs.maintain();
     }
 }
@@ -50,6 +58,7 @@ impl GameState for State {
             self.runstate = player_input(self, ctx);
         }
 
+        damage_system::delete_the_dead(&mut self.ecs);
         draw_map(&self.ecs, ctx);
 
         let positions = self.ecs.read_storage::<Position>();
