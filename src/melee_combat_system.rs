@@ -1,10 +1,10 @@
 use specs::prelude::*;
 use super::{CombatStats, WantsToMelee, Name, SufferDamage, gamelog::GameLog};
-use rltk::console;
 
 pub struct MeleeCombatSystem {}
 
 impl<'a> System<'a> for MeleeCombatSystem {
+    #[allow(clippy::type_complexity)]
     type SystemData = ( Entities<'a>,
                         WriteExpect<'a, GameLog>,
                         WriteStorage<'a, WantsToMelee>,
